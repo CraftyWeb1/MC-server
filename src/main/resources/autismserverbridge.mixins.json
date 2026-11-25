@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "autism.serverbridge.client.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "ScreenInvoker",
+    "HandledScreenAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

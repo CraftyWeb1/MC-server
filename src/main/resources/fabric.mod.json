@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "autismserverbridge",
+  "version": "1.0.0",
+  "name": "AutismServerBridge",
+  "description": "Shows ServerEcoMod balances in SkiesGUIs through MiniPlaceholders.",
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "autism.serverbridge.AutismServerBridge"
+    ],
+    "client": [
+      "autism.serverbridge.client.AutismServerBridgeClient"
+    ]
+  },
+  "mixins": [
+    "autismserverbridge.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.22",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "serverecomod": "1.0.0",
+    "miniplaceholders": ">=2.2.1",
+    "skiesguis": ">=1.5.0"
+  }
+}
