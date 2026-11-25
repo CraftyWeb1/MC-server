@@ -24,6 +24,7 @@ import java.util.UUID;
 public final class AutismServerBridge implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("AutismServerBridge");
     private static volatile MinecraftServer minecraftServer;
+    private static Method changeMethod;
     private static Method setMethod;
     private static Method addMethod;
     private static boolean scannedMutators;
@@ -117,6 +118,10 @@ public final class AutismServerBridge implements ModInitializer {
                     return false;
                 }
                 scanMutators(state.getClass());
+                if (changeMethod != null) {
+                    invokeNumber(changeMethod, state, playerId, currencyId, delta);
+                    return true;
+                }
                 if (setMethod != null) {
                     invokeNumber(setMethod, state, playerId, currencyId, current + delta);
                     return true;
@@ -125,7 +130,7 @@ public final class AutismServerBridge implements ModInitializer {
                     invokeNumber(addMethod, state, playerId, currencyId, delta);
                     return true;
                 }
-                report("ServerEcoMod has getBalance, but no setBalance or addBalance.");
+                report("ServerEcoMod has getBalance, but no changeBalance, setBalance, or addBalance.");
                 return false;
             } catch (Throwable error) {
                 report("Currency change failed: " + error);
@@ -143,6 +148,9 @@ public final class AutismServerBridge implements ModInitializer {
                 names.append(method.getName()).append(' ');
                 if (method.getParameterCount() != 3) {
                     continue;
+                }
+                if (method.getName().equals("changeBalance") && changeMethod == null) {
+                    changeMethod = method;
                 }
                 if (method.getName().equals("setBalance") && setMethod == null) {
                     setMethod = method;
